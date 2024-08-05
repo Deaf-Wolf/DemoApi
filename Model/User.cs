@@ -3,11 +3,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DemoApi.Model
 {
-    [Table("User")]
+    [Table("users")]
     public class User
     {
         [Key]
-        [Column("guid")]
+        [Column("userid")]
         public Guid Guid { get; set; }
         [Required]
         [Column("username")]
