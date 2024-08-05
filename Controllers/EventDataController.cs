@@ -19,70 +19,70 @@ namespace DemoApi.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Event>>> GetAllEvents()
         {
-            var events = await _context.Events.ToListAsync();
+            var evt = await _context.Events.ToListAsync();
 
-            return Ok(events);
+            return Ok(evt);
         }
 
         [HttpGet("{guid}")]
         public async Task<ActionResult<Event>> GetEvent(Guid guid)
         {
-            var events = await _context.Events.FindAsync(guid);
-            if (events is null)
+            var evt = await _context.Events.FindAsync(guid);
+            if (evt is null)
             {
                 return NotFound("User not found");
             }
 
-            return Ok(events);
+            return Ok(evt);
         }
 
         [HttpPost]
-        public async Task<ActionResult<List<Event>>> AddEvent(Event events)
+        public async Task<ActionResult<List<Event>>> AddEvent(Event evt)
         {
 
-            events.Id = Guid.NewGuid(); 
-            await _context.Events.AddAsync(events);
+            evt.Id = Guid.NewGuid(); 
+            await _context.Events.AddAsync(evt);
             await _context.SaveChangesAsync();
 
-            return Ok(events);
+            return Ok(evt);
         }
 
         [HttpPut("{guid}")]
-        public async Task<ActionResult<List<Event>>> UpdateEvent(Guid guid, Event events)
+        public async Task<ActionResult<List<Event>>> UpdateEvent(Guid guid, Event evt)
         {
-            var dbevents = await _context.Events.FindAsync(guid);
-            if (dbevents is null)
+            var dbevt = await _context.Events.FindAsync(guid);
+            if (dbevt is null)
             {
                 return NotFound("User not found");
             }
 
-            dbevents.Id = events.Id;
-            dbevents.Title = events.Title;
-            dbevents.EventDate = events.EventDate;
-            dbevents.StartTime = events.StartTime;
-            dbevents.EndTime = events.EndTime;
-            dbevents.Description = events.Description;
-            dbevents.Eventtype = events.Eventtype;
-            dbevents.UserId = events.UserId;
+            dbevt.Id = evt.Id;
+            dbevt.Title = evt.Title;
+            dbevt.EventDate = evt.EventDate;
+            dbevt.StartTime = evt.StartTime;
+            dbevt.EndTime = evt.EndTime;
+            dbevt.Description = evt.Description;
+            dbevt.Eventtype = evt.Eventtype;
+            dbevt.UserId = evt.UserId;
 
-            _context.Events.Update(dbevents);
+            _context.Events.Update(dbevt);
             await _context.SaveChangesAsync();
 
-            return Ok($"User {events.Id} Updated");
+            return Ok($"User {evt.Id} Updated");
         }
 
         [HttpDelete("{guid}")]
         public async Task<ActionResult<List<User>>> DeleteEvent(Guid guid)
         {
-            var dbevents = await _context.Events.FindAsync(guid);
-            if (dbevents is null)
+            var dbevt = await _context.Events.FindAsync(guid);
+            if (dbevt is null)
             {
                 return NotFound("User not found");
             }
-            _context.Events.Remove(dbevents);
+            _context.Events.Remove(dbevt);
             await _context.SaveChangesAsync();
 
-            return Ok($"User {dbevents.Title} Killed");
+            return Ok($"User {dbevt.Title} Killed");
         }
     }
 }
